@@ -10,7 +10,7 @@ class Alien(Sprite):
 
     def __init__(self, game: 'AlienInvasion', x: float, y: float):
         super().__init__()
-        
+
         self.screen = game.screen
         self.boundaries = game.screen.get_rect()
         self.settings = game.settings
@@ -24,9 +24,12 @@ class Alien(Sprite):
         self.rect.x = x
         self.rect.y = y
 
-        # self.y = float(self.rect.y)
+        self.y = float(self.rect.y)
+        self.x =  float(self.rect.x)
 
     def update(self):
-       pass 
+        temp_speed = self.settings.fleet_speed
+        self.x += temp_speed
+        self.rect.x = self.x
     def draw_alien(self):
         self.screen.blit(self.image, self.rect)
