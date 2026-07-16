@@ -18,7 +18,7 @@ class Alien(Sprite):
         self.settings = fleet.game.settings
 
         self.image = pygame.image.load(self.settings.alien_file)
-        self.imgae = pygame.transform.scale(self.image, 
+        self.image = pygame.transform.scale(self.image, 
             (self.settings.alien_w, self.settings.alien_h)
         )
 
@@ -41,6 +41,6 @@ class Alien(Sprite):
         self.rect.y = self.y
 
     def check_edges(self):
-        return (self.rect.right >= self.boundaries.right or self.rect.left <= self.boundaries.left)
+        return self.rect.right >= self.boundaries.right or self.rect.left <= self.boundaries.left
     def draw_alien(self):
         self.screen.blit(self.image, self.rect)

@@ -79,6 +79,7 @@ class AlienFleet:
         for alien in self.fleet:
             print('here')
             alien.y += self.fleet_drop_speed
+            alien.rect.y = alien.y
         
     
     def update_fleet(self):
@@ -89,6 +90,17 @@ class AlienFleet:
         alien: 'Alien'
         for alien in self.fleet:
             alien.draw_alien()
-        
+    
+    def check_collisions(self,  other_group):
+        return pygame.sprite.groupcollide(self.fleet, other_group, True, True)
+    
+    def check_fleet_bottom(self):
+        alien: Alien
+        for alien in self.fleet:
+            if alien.rect.bottom >= self.settings.screen_h:
+                return True
+        return False
+    
+
 
 
