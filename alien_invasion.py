@@ -31,8 +31,11 @@ class AlienInvasion:
         self.laser_sound = pygame.mixer.Sound(self.settings.bullet_sound)
         self.laser_sound.set_volume(0.7)
 
+        self.impact_sound = pygame.mixer.Sound(self.settings.impact_sound)
+        self.impact_sound.set_volume(0.7)
 
-        self.arsenal = Arsenal(self)
+
+        #self.arsenal = Arsenal(self)
         self.ship = Ship(self, Arsenal(self))
         self.alien_fleet = AlienFleet(self)
         self.alien_fleet.create_fleet()
@@ -43,15 +46,32 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self.alien_fleet.update_fleet()
-            self.arsenal.update_arsenal()
+            self._check_collisions()
+            self.ship.arsenal.update_arsenal()
             self._update_screen()
             self.clock.tick(self.settings.FPS)
+
+    def _check_collisions(self):
+        # check collision for ship
+        if self.ship.check_collision(self.alien_fleet.fleet):
+            self._reset_level()
+            # subtract one life if possibel
+
+        
+
+
+        
+
+    def _reset_level(self):
+        self.ship.arsenal.arsenal.empty()
+        self.alien_fleet.fleet.empty()
+        self.alien_fleet.create_fleet()
 
     def _update_screen(self):
         self.screen.blit(self.bg, (0,0))
         self.ship.draw()
         self.alien_fleet.draw()
-        self.arsenal.draw()
+        #self.arsenal.draw()
         pygame.display.flip()
 
     def _check_events(self):
@@ -77,7 +97,7 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
         elif event.key == pygame.K_SPACE:
-            if self.arsenal.fire_bullet():
+            if self.ship.fire():
                 self.laser_sound.play()
                 self.laser_sound.fadeout(250)
 
