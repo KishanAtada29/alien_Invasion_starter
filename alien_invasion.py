@@ -67,6 +67,12 @@ class AlienInvasion:
             self.impact_sound.play()
             self.impact_sound.fadeout(500)
 
+        if self.alien_fleet.check_destroyed_status():
+           print('here')
+           self._reset_level()
+    
+    
+
 
         
 
