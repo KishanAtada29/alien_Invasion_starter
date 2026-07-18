@@ -1,6 +1,20 @@
+"""
+Module Name: settings.py
+Author: Kishan Atada
+Course: CSCI 1511
+Date: July 15, 2026
+
+Purpose:
+This module stores all settings for the Alien Invasion game. It includes
+screen size, image files, sound files, ship settings, bullet settings,
+alien settings, fleet movement, and starting ship count.
+"""
+
 from pathlib import Path
 class Settings:
+    """Store all game settings for Alien Invasion."""
     def __init__(self):
+        """Initialize screen, ship, bullet, alien, and fleet settings."""
         self.name: str = 'Alien Invasion'
         self.screen_w = 1200
         self.screen_h = 800
@@ -8,9 +22,10 @@ class Settings:
         self.bg_file = Path.cwd() /'Assets' / 'images' / 'Starbasesnow.png'
 
         self.ship_file = Path.cwd() /'Assets'/'images' /'ship2(no bg).png'
-        self.ship_w = 40
-        self.ship_h = 60
+        self.ship_w = 20
+        self.ship_h = 30
         self.ship_speed = 5
+        self.starting_ship_count = 3
 
         self.bullet_file = Path.cwd()  /'Assets' / 'images' / 'laserBlast.png'
         self.bullet_sound = Path.cwd() /'Assets' / 'sound' / 'laser.mp3'
