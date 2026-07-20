@@ -25,6 +25,8 @@ from arsenal import Arsenal
 #from alien import Alien
 from aline_fleet import AlienFleet
 from time import sleep
+from button import Button
+
 class AlienInvasion:
     """Main class that controls the Alien Invasion game."""
 
@@ -63,7 +65,9 @@ class AlienInvasion:
         self.ship = Ship(self, Arsenal(self))
         self.alien_fleet = AlienFleet(self)
         self.alien_fleet.create_fleet()
-        self.game_active = True
+
+        self.play_button = Button(self, 'Play')
+        self.game_active = False
 
     def run_game(self) -> None:
         """Run the main game loop."""
@@ -117,12 +121,28 @@ class AlienInvasion:
         self.alien_fleet.fleet.empty()
         self.alien_fleet.create_fleet()
 
+    def restart_game(self):
+        # setting up dynamic Settings
+        # reset Game stats
+        # update HUD scores
+        # reset level
+        # recenter the ship
+        self._reset_level()
+        self.ship._center_ship()
+        self.game_active =True
+        pygame.mouse.set_visible(False)
     def _update_screen(self):
         """Draw the background, ship, aliens, bullets, and update the display."""
         self.screen.blit(self.bg, (0,0))
         self.ship.draw()
         self.alien_fleet.draw()
         #self.arsenal.draw()
+
+        if not self.game_active:
+            self.play_button.draw()
+            pygame.mouse.set_visible(True)
+
+
         pygame.display.flip()
 
     def _check_events(self):
@@ -132,10 +152,17 @@ class AlienInvasion:
                 self.running = False
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN and self.game_active == True:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                  self._check_keyup_events(event)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                self._check_button_clicked()
+
+    def _check_button_clicked(self):
+        mouse_pos = pygame.mouse.get_pos()
+        if self.play_button.check_clicked(mouse_pos):
+            self.restart_game()
 
     def _check_keyup_events(self, event):
         """Handle key press events."""
