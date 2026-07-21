@@ -33,7 +33,7 @@ class Settings:
         self.impact_sound = Path.cwd() /'Assets' / 'sound' / 'impactSound.mp3'
 
         
-        self.bullet_w = 25
+        self.bullet_w = 250
         self.bullet_h = 80
         
 

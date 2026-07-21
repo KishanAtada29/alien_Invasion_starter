@@ -111,6 +111,7 @@ class AlienInvasion:
            # update gmae stats level
            self.game_stats.update_level()
            # update HUD view
+           self.HUD.update_level()
 
     def _check_game_status(self):
         """Update lives and reset or stop the game when needed."""
