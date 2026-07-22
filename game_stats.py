@@ -27,6 +27,7 @@ class GameStats():
         self.reset_stats() 
 
     def init_saved_scores(self):
+        """Load the saved high score file if it exists."""
         self.path = self.settings.scores_file
         if self.path.exists() and self.path.stat.__sizeof__() > 20:
             contents = self.path.read_text()
@@ -40,6 +41,7 @@ class GameStats():
             # save the file
     
     def save_score(self):
+        """Save the high score to a JSON file."""
         scores = {
             'hi_score': self.hi_score
         }
@@ -50,11 +52,13 @@ class GameStats():
             print(f'File Not Found: {e}')
 
     def reset_stats(self):
+        """Reset ships, score, and level for a new game."""
         self.ships_left = self.settings.starting_ship_count
         self.score = 0
         self.level = 1
 
     def update(self, collisions):
+        """Update score, max score, and high score after collisions."""
         # update score
         self._update_score(collisions)
 
@@ -66,23 +70,27 @@ class GameStats():
         self._update_hi_score()
 
     def _update_max_score(self):
+        """Update max score when the current score is higher."""
         if self.score > self.max_score:
             self.max_score = self.score
         #print(f'Max: {self.max_score}')
     
     def _update_hi_score(self):
+        """Update high score when the current score is higher."""
         if self.score > self.hi_score:
             self.hi_score = self.score
         #print(f'Hi: {self.hi_score}')
         
 
     def _update_score(self, collisions):
+        """Add points for each alien destroyed."""
         for alien in collisions.values():
             self.score += self.settings.alien_points
         #print(f'Basic: {self.score}')
         
 
     def update_level(self):
+        """Increase the level by one."""
         self.level += 1
         print(self.level)
 

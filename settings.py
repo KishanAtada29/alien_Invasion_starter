@@ -54,6 +54,7 @@ class Settings:
         self.font_file = Path.cwd() /'Assets'/'Fonts'/'Silkscreen'/'Silkscreen-Bold.ttf'
 
     def initialize_dynamic_settings(self):
+        """Set values that can reset or change during the game."""
         self.ship_speed = 5
         self.starting_ship_count = 3
         self.bullet_speed = 7
@@ -64,6 +65,7 @@ class Settings:
         self.alien_points = 50
     
     def increase_difficulty(self):
+        """Increase game speed when the player reaches the next level."""
         self.ship_speed *= self.difficulty_scale
         self.bullet_speed *= self.difficulty_scale
         self.fleet_speed *= self.difficulty_scale
